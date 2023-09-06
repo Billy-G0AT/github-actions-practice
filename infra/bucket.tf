@@ -11,6 +11,6 @@ resource "aws_s3_bucket" "this" {
 resource "aws_s3_bucket_website_configuration" "this" {
   bucket = "github-actions-practice-314"
   index_document {
-    suffix = "index.html"
+    suffix = "indexxxx.html"
   }
 }
