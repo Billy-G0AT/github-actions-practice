@@ -49,12 +49,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Comment Plan on Pull Request
-        uses: unsplash/comment-on-pr@v1
+        uses: softprops/action-comment@v1
         with:
-          msg: |
-            **Terraform Plan:**
-            ```shell
-            $(Get-Content filtered_plan.txt)
-            ```
+          files: |
+            filtered_plan.txt
+          issue-type: pr
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
