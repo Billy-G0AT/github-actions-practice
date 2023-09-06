@@ -1,0 +1,60 @@
+name: Pull Request Terraform
+
+on:
+  pull_request:
+    branches:
+      - main # or the branch you want to trigger on
+
+jobs:
+  test:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.11 # Replace with your Python version
+
+      # - name: Install dependencies
+      #   run: pip install -r requirements.txt # Replace with the command to install your dependencies
+
+      - name: Run Python Tests
+        run: python lambda/test.py # Replace with your test command
+
+  format_and_plan:
+    runs-on: windows-latest
+    needs: test
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Terraform Format Check
+        run: |
+          terraform fmt -check -recursive
+        continue-on-error: true
+
+      - name: Terraform Plan
+        run: |
+          terraform init
+          terraform plan -out=tfplan
+          Get-Content tfplan | Where-Object { $_ -notlike '*Refreshing state...*' } | Set-Content filtered_plan.txt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Comment Plan on Pull Request
+        uses: unsplash/comment-on-pr@v1
+        with:
+          msg: |
+            **Terraform Plan:**
+            ```shell
+            $(Get-Content filtered_plan.txt)
+            ```
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
