@@ -1,0 +1,5 @@
+# Ignore All Python Meta Files
+__pycache__/
+
+# Ignore All Files With .zip Extension
+*.zip

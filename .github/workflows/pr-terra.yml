@@ -22,7 +22,7 @@ jobs:
       #   run: pip install -r requirements.txt # Replace with the command to install your dependencies
 
       - name: Run Python Tests
-        run: python lambda/test_simple_visit_count_lambda_function.py # Replace with your test command
+        run: python -m unittest discover -s tests -p lambda/test_simple_visit_count_lambda_function.py # Replace with your test command
 
   format_check:
     runs-on: windows-latest
