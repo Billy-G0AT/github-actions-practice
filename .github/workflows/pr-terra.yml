@@ -24,7 +24,7 @@ jobs:
       - name: Run Python Tests
         run: python lambda/test.py # Replace with your test command
 
-  format_and_plan:
+  format_check:
     runs-on: windows-latest
     needs: test
 
@@ -36,23 +36,4 @@ jobs:
         uses: hashicorp/setup-terraform@v1
 
       - name: Terraform Format Check
-        run: |
-          terraform fmt -check -recursive
-        continue-on-error: true
-
-      - name: Terraform Plan
-        run: |
-          terraform init
-          terraform plan -out=tfplan
-          Get-Content tfplan | Where-Object { $_ -notlike '*Refreshing state...*' } | Set-Content filtered_plan.txt
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Comment Plan on Pull Request
-        uses: softprops/action-comment@v1
-        with:
-          files: |
-            filtered_plan.txt
-          issue-type: pr
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: terraform fmt -check -recursive
