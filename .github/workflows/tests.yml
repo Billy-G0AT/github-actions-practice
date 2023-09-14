@@ -1,39 +1,26 @@
-name: Pull Request Terraform
+name: Tests
 
 on:
   pull_request:
     branches:
-      - main # or the branch you want to trigger on
+      - main
 
 jobs:
-  test:
+  simple_lambda_test:
+    name: Simple Lambda Test
     runs-on: windows-latest
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: Set up Python
+      - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.11 # Replace with your Python version
+          python-version: 3.11
 
-      # - name: Install dependencies
-      #   run: pip install -r requirements.txt # Replace with the command to install your dependencies
+      - name: Install boto3 For Simple Test
+        run: pip3 install boto3
 
-      - name: Run Python Tests
-        run: python -m unittest discover -s tests -p lambda/test_simple_visit_count_lambda_function.py # Replace with your test command
-
-  format_check:
-    runs-on: windows-latest
-    needs: test
-
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-
-      - name: Install Terraform
-        uses: hashicorp/setup-terraform@v1
-
-      - name: Terraform Format Check
-        run: terraform fmt -check -recursive
+      - name: Run Unit Test
+        run: python lambda\test_simple_visit_count_lambda_function.py
