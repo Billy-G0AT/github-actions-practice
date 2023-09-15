@@ -113,12 +113,12 @@ jobs:
           commenter_exitcode: ${{ steps.validate.outputs.exitcode }}
       
       - name: TFLint - Setup
-        id: tflint
         uses: terraform-linters/setup-tflint@v3
         with:
           tflint_wrapper_enabled: true
       
       - name: TFLint - Run
+        id: tflint
         run: |
           tflint --version
           tflint --init
@@ -143,7 +143,7 @@ jobs:
         with:
           commenter_type: plan
           commenter_plan_path: tf_plan.txt
-          commenter_exitcode: ${{ steps.plan.outputs.exit }}
+          commenter_exitcode: ${{ steps.plan.outputs.exitcode }}
 
   # terraform_plan:
   #   name: Terraform Plan
