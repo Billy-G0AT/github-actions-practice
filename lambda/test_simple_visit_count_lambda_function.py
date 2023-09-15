@@ -6,7 +6,7 @@ class test_lambda(unittest.TestCase):
         returns = lambda_handler(any,any)
 
         self.assertEqual(returns['statusCode'], 200)
-        self.assertEqual(int(returns['foobar']) + 1, int(returns['body']))
+        self.assertEqual(int(returns['foobar']) + 2, int(returns['body']))
 
 
 if __name__ == '__main__':
