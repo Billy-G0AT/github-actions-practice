@@ -112,25 +112,25 @@ jobs:
           commenter_input: ${{ format('{0}{1}', steps.validate.outputs.stdout, steps.validate.outputs.stderr) }}
           commenter_exitcode: ${{ steps.validate.outputs.exitcode }}
       
-      - name: TFLint - Setup
-        uses: terraform-linters/setup-tflint@v3
-        with:
-          tflint_wrapper_enabled: true
+      # - name: TFLint - Setup
+      #   uses: terraform-linters/setup-tflint@v3
+      #   with:
+      #     tflint_wrapper_enabled: true
       
-      - name: TFLint - Run
-        id: tflint
-        run: |
-          tflint --version
-          tflint --init
-          tflint
+      # - name: TFLint - Run
+      #   id: tflint
+      #   run: |
+      #     tflint --version
+      #     tflint --init
+      #     tflint
       
-      - name: Post TFLint Comment
-        if: ${{ always() && (steps.tflint.outcome == 'success' || steps.tflint.outcome == 'failure') }}
-        uses: GetTerminus/terraform-pr-commenter@dpr-update-commenter
-        with:
-          commenter_type: tflint
-          commenter_input: ${{ format('{0}{1}', steps.tflint.outputs.stdout, steps.tflint.outputs.stderr) }}
-          commenter_exitcode: ${{ steps.tflint.outputs.exitcode }}
+      # - name: Post TFLint Comment
+      #   if: ${{ always() && (steps.tflint.outcome == 'success' || steps.tflint.outcome == 'failure') }}
+      #   uses: GetTerminus/terraform-pr-commenter@dpr-update-commenter
+      #   with:
+      #     commenter_type: tflint
+      #     commenter_input: ${{ format('{0}{1}', steps.tflint.outputs.stdout, steps.tflint.outputs.stderr) }}
+      #     commenter_exitcode: ${{ steps.tflint.outputs.exitcode }}
       
       - name: Terraform Plan
         id: plan
