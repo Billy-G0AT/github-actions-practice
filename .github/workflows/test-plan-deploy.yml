@@ -97,5 +97,7 @@ jobs:
 
       - name: Terraform Change PR Commenter
         uses: liatrio/terraform-change-pr-commenter@v1.4.1
+        with:
+          json-file: false
             
             
