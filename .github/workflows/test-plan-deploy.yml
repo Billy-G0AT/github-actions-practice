@@ -93,7 +93,7 @@ jobs:
         run: terraform validate
       
       - name: Terraform Plan
-        run: terraform plan -out
+        run: terraform plan -input=false -json -out=tfplan.json
 
       # - name: idk
       #   run: terraform show -no-color -json tfplan.plan > tfplan.json
