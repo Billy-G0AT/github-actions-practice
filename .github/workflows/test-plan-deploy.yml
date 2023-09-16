@@ -104,6 +104,6 @@ jobs:
       - name: Notify terraform plan result as PR comment
         uses: kota65535/github-terraform-plan-comment-action@v1
         with:
-          plan-job: plan
-          plan-step: Run terraform plan
+          plan-job: terraform_plan
+          plan-step: Terraform Plan
             
