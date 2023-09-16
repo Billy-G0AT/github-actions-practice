@@ -93,7 +93,7 @@ jobs:
         run: terraform validate
       
       - name: Terraform Plan
-        run: terraform plan -out=./infra/tfplan.json
+        run: terraform plan -out=infra/tfplan.json
 
       - name: Terraform Change PR Commenter
         uses: liatrio/terraform-change-pr-commenter@v1.4.1
