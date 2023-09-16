@@ -61,7 +61,7 @@ jobs:
 
   terraform_plan:
     name: Terraform Plan
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./infra
@@ -93,14 +93,17 @@ jobs:
         run: terraform validate
       
       - name: Terraform Plan
-        run: terraform plan '-out=tfplan.json'
+        id: plan
+        run: terraform plan -out workspace.plan
 
-      # - name: idk
-      #   run: terraform show -no-color -json tfplan.plan > tfplan.json
-
-      - name: Terraform Change PR Commenter
-        uses: liatrio/terraform-change-pr-commenter@v1.4.1
+  after-plan:
+    runs-on: ubuntu-latest
+    needs:
+      - terraform_plan
+    steps:
+      - name: Notify terraform plan result as PR comment
+        uses: kota65535/github-terraform-plan-comment-action@v1
         with:
-          json-file: tfplan.json
-          expand-comment: 'true'
+          plan-job: plan
+          plan-step: Run terraform plan
             
