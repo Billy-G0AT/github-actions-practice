@@ -93,10 +93,10 @@ jobs:
         run: terraform validate
       
       - name: Terraform Plan
-        run: terraform plan -input=false -json -out=tfplan.json
+        run: terraform plan -input=false -out=./tfplan.plan
 
-      # - name: idk
-      #   run: terraform show -no-color -json tfplan.plan > tfplan.json
+      - name: idk
+        run: terraform show -no-color -json tfplan.plan > tfplan.json
 
       - name: Terraform Change PR Commenter
         uses: liatrio/terraform-change-pr-commenter@v1.4.1
