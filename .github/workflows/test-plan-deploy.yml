@@ -106,4 +106,5 @@ jobs:
         with:
           plan-job: terraform_plan
           plan-step: Terraform Plan
+          github-token: ${{ secrets.GITHUB_TOKEN }}
             
