@@ -61,7 +61,7 @@ jobs:
 
   terraform_plan:
     name: Terraform Plan
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
     defaults:
       run:
