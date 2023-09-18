@@ -1,6 +1,6 @@
-provider "aws" {
-  region = "us-west-1"
-}
+# provider "aws" {
+#   region = "us-west-1"
+# }
 
 #* Domain Bucket
 resource "aws_s3_bucket" "this" {
