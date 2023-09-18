@@ -4,7 +4,7 @@ provider "aws" {
 
 #* Domain Bucket
 resource "aws_s3_bucket" "this" {
-  bucket = "github-actions-practice-314"
+  bucket      = "github-actions-practice-314"
 }
 
 #* Domain Bucket Index File

@@ -91,10 +91,9 @@ jobs:
 
       - name: Terraform Format
         id: fmt
-        run: |
-          terraform fmt -check -recursive -diff
+        run: terraform fmt -check -recursive -diff
         continue-on-error: true
-        
+
       - name: Post Format Comment
         if: ${{ always() && (steps.fmt.outcome == 'success' || steps.fmt.outcome == 'failure') }}
         uses: GetTerminus/terraform-pr-commenter@v3
