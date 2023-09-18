@@ -10,6 +10,9 @@ jobs:
   simple_lambda_test:
     name: Simple Lambda Test
     runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: ./lambda
 
     steps:
       - name: Checkout Code
@@ -31,11 +34,14 @@ jobs:
         run: pip3 install boto3
 
       - name: Run Unit Test
-        run: python ./lambda/test_simple_visit_count_lambda_function.py
+        run: python test_simple_visit_count_lambda_function.py
 
   mock_lambda_test:
     name: Mock Lambda Test
     runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: ./lambda
 
     steps:
       - name: Checkout Code
@@ -57,7 +63,7 @@ jobs:
         run: pip3 install boto3
 
       - name: Run Mock Test
-        run: python ./lambda/test_comprehensive_visit_count_lambda_function.py
+        run: python test_comprehensive_visit_count_lambda_function.py
 
   terraform_plan:
     name: Terraform Plan
