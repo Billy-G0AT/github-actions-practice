@@ -1,4 +1,4 @@
-name: Test Plan and Deploy
+name: Test-Plan-Deploy
 
 on:
   pull_request:
