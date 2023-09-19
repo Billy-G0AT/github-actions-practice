@@ -131,7 +131,7 @@ jobs:
         run: terraform plan -input=false -out=infra/tfplan.plan
 
       - name: Convert Plan To Json
-        run: terraform show -no-color -json infra/tfplan.plan > infra/tfplan.json
+        run: terraform show -no-color -json tfplan.plan > tfplan.json
       
       - uses: GetTerminus/terraform-pr-commenter@v3
         env:
