@@ -71,7 +71,6 @@ jobs:
     if: github.event_name == 'pull_request'
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      TF_VERSION: "1.4.6"
     defaults:
       run:
         working-directory: ./infra
@@ -135,5 +134,5 @@ jobs:
       - uses: GetTerminus/terraform-pr-commenter@v3
         with:
           commenter_type: plan
-          commenter_plan_path: tf_plan.txt
+          commenter_plan_path: infra/tf_plan.txt
           commenter_exitcode: ${{ steps.plan.outputs.exitcode }}
