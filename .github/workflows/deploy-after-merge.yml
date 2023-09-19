@@ -1,48 +1,48 @@
-name: Deploy After Merge
+# name: Deploy After Merge
 
-on:
-  pull_request:
-    types:
-      - closed
+# on:
+#   pull_request:
+#     types:
+#       - closed
 
-jobs:
-  terraform_deploy:
-      name: Deploy 
-      if: github.event.pull_request.merged == true      
-      runs-on: ubuntu-latest
-      defaults:
-        run:
-          working-directory: ./infra
+# jobs:
+#   terraform_deploy:
+#       name: Deploy 
+#       if: github.event.pull_request.merged == true      
+#       runs-on: ubuntu-latest
+#       defaults:
+#         run:
+#           working-directory: ./infra
 
-      steps:
-        - name: Checkout Code
-          uses: actions/checkout@v2
+#       steps:
+#         - name: Checkout Code
+#           uses: actions/checkout@v2
 
-        - name: Configure AWS Credentials
-          uses: aws-actions/configure-aws-credentials@v2
-          with:
-            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            aws-region: us-west-1
+#         - name: Configure AWS Credentials
+#           uses: aws-actions/configure-aws-credentials@v2
+#           with:
+#             aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#             aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#             aws-region: us-west-1
 
-        - name: Setup Terraform
-          uses: hashicorp/setup-terraform@v2
+#         - name: Setup Terraform
+#           uses: hashicorp/setup-terraform@v2
 
-        - name: Terraform Format
-          id: fmt
-          run: terraform fmt -check -recursive
-          continue-on-error: true
+#         - name: Terraform Format
+#           id: fmt
+#           run: terraform fmt -check -recursive
+#           continue-on-error: true
 
-        - name: Terraform Init
-          id: init
-          run: terraform init -input=false
+#         - name: Terraform Init
+#           id: init
+#           run: terraform init -input=false
 
-        - name: Terraform Validate
-          id: validate
-          run: terraform validate
+#         - name: Terraform Validate
+#           id: validate
+#           run: terraform validate
 
-        - name: Terraform Apply
-          id: apply
-          run: terraform apply -auto-approve
+#         - name: Terraform Apply
+#           id: apply
+#           run: terraform apply -auto-approve
 
 
