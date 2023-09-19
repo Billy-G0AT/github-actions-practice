@@ -71,6 +71,7 @@ jobs:
     if: github.event_name == 'pull_request'
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      TF_VERSION: "1.4.6"
     defaults:
       run:
         working-directory: ./infra
@@ -88,6 +89,8 @@ jobs:
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: ${{ env.TF_VERSION }}        
 
       - name: Terraform Format
         id: fmt
@@ -128,15 +131,9 @@ jobs:
 
       - name: Terraform Plan
         id: plan
-        run: terraform plan -input=false -out=tf_plan.json
-
-      - name: Convert Plan To Json
-        run: terraform show -no-color -json tf_plan.json > tf_plan.json
-      
+        run: terraform plan -lock=false -input=false |& tee tf_plan.txt
       - uses: GetTerminus/terraform-pr-commenter@v3
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           commenter_type: plan
-          commenter_plan_path: infra/tf_plan.json
+          commenter_plan_path: tf_plan.txt
           commenter_exitcode: ${{ steps.plan.outputs.exitcode }}
