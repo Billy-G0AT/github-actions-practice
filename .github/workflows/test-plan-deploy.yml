@@ -138,5 +138,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           commenter_type: plan
-          commenter_plan_path: infra/tf_plan.text
+          commenter_plan_path: infra/tf_plan.txt
           commenter_exitcode: ${{ steps.plan.outputs.exitcode }}
