@@ -190,14 +190,4 @@ jobs:
       - name: Terraform Apply
         id: apply
         run: terraform apply -auto-approve
-        continue-on-error: true
 
-      - name: Store Terraform Outputs to File
-        run: terraform output -json > ./terraform_outputs.json
-
-      - name: Store Terraform Outputs as Artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: terraform_outputs
-          path: infra/terraform_outputs.json
-    
