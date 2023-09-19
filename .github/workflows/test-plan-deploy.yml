@@ -67,6 +67,9 @@ jobs:
 
   terraform_plan:
     name: Terraform Plan
+    needs:
+      - simple_lambda_test
+      - mock_lambda_test
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
     env:
