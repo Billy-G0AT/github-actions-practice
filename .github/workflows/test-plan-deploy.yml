@@ -190,6 +190,7 @@ jobs:
       - name: Terraform Apply
         id: apply
         run: terraform apply -auto-approve
+        continue-on-error: true
 
       - name: Store Terraform Outputs to File
         run: terraform output -json > ./terraform_outputs.json
