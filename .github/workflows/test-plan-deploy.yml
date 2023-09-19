@@ -67,11 +67,13 @@ jobs:
 
   terraform_plan:
     name: Terraform Plan
+    
     needs:
       - simple_lambda_test
       - mock_lambda_test
-    runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
+    
+    runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       EXPAND_SUMMARY_DETAILS: true
@@ -140,3 +142,59 @@ jobs:
           commenter_type: plan
           commenter_plan_path: infra/tf_plan.txt
           commenter_exitcode: ${{ steps.plan.outputs.exitcode }}
+
+  terraform_deploy:
+    name: Deploy 
+   
+    needs:
+      - simple_lambda_test
+      - mock_lambda_test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./infra
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-1
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_wrapper: false
+
+      - name: Terraform Format
+        id: fmt
+        run: terraform fmt -check -recursive
+        continue-on-error: true
+
+      - name: Terraform Init
+        id: init
+        run: terraform init -input=false
+      
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate
+
+      - name: Terraform Apply
+        id: apply
+        run: terraform apply -auto-approve
+
+      - name: Store Terraform Outputs to File
+        run: terraform output -json > ./terraform_outputs.json
+
+      - name: Store Terraform Outputs as Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: terraform_outputs
+          path: infra/terraform_outputs.json
+    
