@@ -128,7 +128,7 @@ jobs:
 
       - name: Terraform Plan
         id: plan
-        run: terraform plan -input=false |& tee infra/tf_plan.txt
+        run: terraform plan -input=false -out=infra/tf_plan.txt
       
       - uses: GetTerminus/terraform-pr-commenter@v3
         env:
