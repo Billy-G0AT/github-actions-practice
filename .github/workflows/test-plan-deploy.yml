@@ -71,6 +71,7 @@ jobs:
     if: github.event_name == 'pull_request'
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      EXPAND_SUMMARY_DETAILS: true
       #* For Matrix Runs
       # TF_WORKSPACE: 
 
