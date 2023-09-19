@@ -128,15 +128,15 @@ jobs:
 
       - name: Terraform Plan
         id: plan
-        run: terraform plan -input=false -out=tf_plan.txt
+        run: terraform plan -input=false -out=tf_plan.json
 
-      # - name: Convert Plan To Json
-      #   run: terraform show -no-color -json tfplan.plan > tfplan.json
+      - name: Convert Plan To Json
+        run: terraform show -no-color -json tf_plan.json > tf_plan.json
       
       - uses: GetTerminus/terraform-pr-commenter@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           commenter_type: plan
-          commenter_plan_path: infra/tf_plan.txt
+          commenter_plan_path: infra/tf_plan.json
           commenter_exitcode: ${{ steps.plan.outputs.exitcode }}
