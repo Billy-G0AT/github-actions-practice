@@ -71,6 +71,8 @@ jobs:
     if: github.event_name == 'pull_request'
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      TF_WORKSPACE: false
+
     defaults:
       run:
         working-directory: ./infra
@@ -88,8 +90,6 @@ jobs:
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: ${{ env.TF_VERSION }}        
 
       - name: Terraform Format
         id: fmt
