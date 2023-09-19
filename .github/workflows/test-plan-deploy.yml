@@ -128,7 +128,7 @@ jobs:
 
       - name: Terraform Plan
         id: plan
-        run: terraform plan -input=false |& tee tf_plan.txt
+        run: terraform plan -input=false -out=tf_plan.txt
 
       # - name: Convert Plan To Json
       #   run: terraform show -no-color -json tfplan.plan > tfplan.json
