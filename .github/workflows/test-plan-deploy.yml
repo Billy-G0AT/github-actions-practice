@@ -72,8 +72,7 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       EXPAND_SUMMARY_DETAILS: true
-      #* For Matrix Runs
-      # TF_WORKSPACE: 
+      TF_WORKSPACE: default # change for matrix runs
 
     defaults:
       run:
@@ -132,7 +131,7 @@ jobs:
 
       - name: Terraform Plan
         id: plan
-        run: terraform plan -input=false |& tee tf_plan.txt
+        run: terraform plan -input=false |& tee tf_plan.txt 
       - uses: GetTerminus/terraform-pr-commenter@v3
         with:
           commenter_type: plan
