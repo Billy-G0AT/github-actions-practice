@@ -129,7 +129,10 @@ jobs:
       - name: Terraform Plan
         id: plan
         run: terraform plan -input=false |& tee tf_plan.txt
-      - uses: GetTerminus/terraform-pr-commenter@v3
+
+      - name: Post TF Plan Comment  
+        if: ${{ always() && (steps.plan.outcome == 'success' || steps.plan.outcome == 'failure') }}
+        uses: GetTerminus/terraform-pr-commenter@v3
         with:
           commenter_type: plan
           commenter_plan_path: tf_plan.txt
