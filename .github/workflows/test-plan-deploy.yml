@@ -12,7 +12,7 @@ jobs:
     runs-on: windows-latest
     defaults:
       run:
-        working-directory: ./lambda
+        working-directory: ./back-end/lambda
 
     steps:
       - name: Checkout Code
@@ -41,7 +41,7 @@ jobs:
     runs-on: windows-latest
     defaults:
       run:
-        working-directory: ./lambda
+        working-directory: ./back-end/lambda
 
     steps:
       - name: Checkout Code
@@ -81,7 +81,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./infra
+        working-directory: ./back-end/infra
     
     steps:
       - name: Checkout Code
@@ -156,7 +156,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./infra
+        working-directory: ./back-end/infra
 
     steps:
       - name: Checkout Code
