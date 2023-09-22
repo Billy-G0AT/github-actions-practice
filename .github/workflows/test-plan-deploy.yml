@@ -219,7 +219,7 @@ jobs:
   sync_s3:
     name: Sync S3
     needs: changes
-    if: ${{ needs.changes.outputs.front-end == 'true' }}
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && needs.changes.outputs.front-end == 'true'
     runs-on: ubuntu-latest
     defaults:
       run:
