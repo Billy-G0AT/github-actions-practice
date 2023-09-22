@@ -9,17 +9,19 @@ jobs:
   sync_s3:
     name: Sync S3
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./front-end
     steps:
       - name: Checkout Code
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
 
-      - name: Update Bucket
-        uses: jakejarvis/s3-sync-action@master
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-          args: --acl public-read --follow-symlinks --delete
-        env:
-          AWS_S3_BUCKET: 'github-actions-practice-314'
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: 'us-west-1'
-          SOURCE_DIR: './front-end'
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-1
+
+      - name: Upload Files To S3 Bucket
+        run: aws s3 sync . s3://github-actions-practice-314
