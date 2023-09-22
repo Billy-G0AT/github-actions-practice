@@ -8,6 +8,7 @@ on:
 
 jobs:
   changes:
+    name: File Change Filter
     runs-on: ubuntu-latest
     outputs:
       back-end: ${{ steps.filter.outputs.back-end }}
